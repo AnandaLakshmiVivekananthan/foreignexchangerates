@@ -10,4 +10,7 @@ public class ForeignexchangeratesApplication {
 		SpringApplication.run(ForeignexchangeratesApplication.class, args);
 	}
 
+
 }
+
+
