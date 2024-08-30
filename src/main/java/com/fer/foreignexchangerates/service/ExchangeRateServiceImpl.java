@@ -28,21 +28,22 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 		ResponseMapper mapper = new ResponseMapper();
 		Optional<ExchangeRate> rate = exchangeRateRepository.findLatestRecords();
 		if (rate.isEmpty()) {
-			GetAllExternalApiDto result = null;
 			try {
+				GetAllExternalApiDto result = null;
 				String uri = "https://api.frankfurter.app/latest";
 				RestTemplate restTemplate = new RestTemplate();
 				String responseString = restTemplate.getForObject(uri, String.class);
 				result = JsonUtils.readObjectFromJsonString(responseString, GetAllExternalApiDto.class);
+
 				ExchangeRate exchangeRate = new ExchangeRate();
 				exchangeRate.setSource("EUR");
 				exchangeRate.setDate(LocalDate.now());
 				exchangeRate.setCZK(result.getRates().getCZK());
 				exchangeRate.setGBP(result.getRates().getGBP());
 				exchangeRate.setJPY(result.getRates().getJPY());
-				exchangeRate.setCZK(result.getRates().getCZK());
 				exchangeRate.setUSD(result.getRates().getUSD());
 				exchangeRateRepository.save(exchangeRate);
+
 				rate = exchangeRateRepository.findLatestRecords();
 			} catch (IOException e) {
 				throw new RuntimeException(e);

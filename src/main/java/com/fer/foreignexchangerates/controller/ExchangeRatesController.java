@@ -1,7 +1,6 @@
 package com.fer.foreignexchangerates.controller;
 
 import com.fer.foreignexchangerates.dto.GetAllResponseDto;
-import com.fer.foreignexchangerates.model.ExchangeRate;
 import com.fer.foreignexchangerates.service.ExchangeRateServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,7 @@ public class ExchangeRatesController {
 	ExchangeRateServiceImpl rateService;
 
 	@GetMapping("/")
-	private GetAllResponseDto getAllExchangeRates(){
+	public GetAllResponseDto getAllExchangeRates(){
 		return rateService.getAllExchangeRates();
 	}
 }

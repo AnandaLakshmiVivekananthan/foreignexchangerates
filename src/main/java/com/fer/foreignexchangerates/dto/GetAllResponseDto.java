@@ -44,4 +44,13 @@ public class GetAllResponseDto {
 	public void setRates(List<RateDto> rates) {
 		this.rates = rates;
 	}
+
+	@Override
+	public String toString() {
+		return "GetAllResponseDto{" +
+				"date=" + date +
+				", source='" + source + '\'' +
+				", rates=" + rates.toString() +
+				'}';
+	}
 }

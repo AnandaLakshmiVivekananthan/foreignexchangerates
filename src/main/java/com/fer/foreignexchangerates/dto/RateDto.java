@@ -27,4 +27,12 @@ public class RateDto {
 	public void setValue(Double value) {
 		this.value = value;
 	}
+
+	@Override
+	public String toString() {
+		return "RateDto{" +
+				"target='" + target + '\'' +
+				", value=" + value +
+				'}';
+	}
 }
