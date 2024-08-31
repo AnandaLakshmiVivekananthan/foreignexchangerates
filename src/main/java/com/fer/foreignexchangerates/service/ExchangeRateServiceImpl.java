@@ -3,6 +3,7 @@ package com.fer.foreignexchangerates.service;
 import com.fer.foreignexchangerates.Mapper.ResponseMapper;
 import com.fer.foreignexchangerates.dto.GetAllExternalApiDto;
 import com.fer.foreignexchangerates.dto.GetAllResponseDto;
+import com.fer.foreignexchangerates.dto.GetTargetResponseDto;
 import com.fer.foreignexchangerates.model.ExchangeRate;
 import com.fer.foreignexchangerates.repository.ExchangeRateRepository;
 import com.mgnt.utils.JsonUtils;
@@ -12,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -23,9 +25,11 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 	@Autowired
 	ExchangeRateRepository exchangeRateRepository;
 
+	ResponseMapper mapper = new ResponseMapper();
+
 	@Override
 	public GetAllResponseDto getAllExchangeRates() {
-		ResponseMapper mapper = new ResponseMapper();
+
 		Optional<ExchangeRate> rate = exchangeRateRepository.findLatestRecords();
 		if (rate.isEmpty()) {
 			try {
@@ -49,6 +53,26 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 				throw new RuntimeException(e);
 			}
 		}
-		return mapper.getAllResponseMapper(rate.get());
+		return mapper.mapGetAllExchangeRates(rate.get());
+	}
+
+	public GetTargetResponseDto getTargetCurrency(String targetCurrency) {
+		List<ExchangeRate> rateList = exchangeRateRepository.findTargetExchangeRates();
+		switch (targetCurrency) {
+			case "gbp":
+				return mapper.mapGBPExchangeRate(rateList);
+
+			case "czk":
+				break;
+
+			case "jpy":
+				break;
+
+			case "usd":
+				break;
+		}
+
+//		return rateList;
+		return null;
 	}
 }

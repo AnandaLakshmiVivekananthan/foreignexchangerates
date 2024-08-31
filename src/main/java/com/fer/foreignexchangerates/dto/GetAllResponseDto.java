@@ -8,8 +8,8 @@ import java.util.List;
  */
 public class GetAllResponseDto {
 
+	String source;
 	public LocalDate date;
-	private String source;
 	private List<RateDto> rates;
 
 	public GetAllResponseDto() {

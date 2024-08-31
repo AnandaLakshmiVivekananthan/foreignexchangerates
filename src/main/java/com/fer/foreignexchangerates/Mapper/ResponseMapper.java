@@ -1,7 +1,6 @@
 package com.fer.foreignexchangerates.Mapper;
 
-import com.fer.foreignexchangerates.dto.GetAllResponseDto;
-import com.fer.foreignexchangerates.dto.RateDto;
+import com.fer.foreignexchangerates.dto.*;
 import com.fer.foreignexchangerates.model.ExchangeRate;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
  */
 
 public class ResponseMapper {
-	public GetAllResponseDto getAllResponseMapper(ExchangeRate rate) {
+	public GetAllResponseDto mapGetAllExchangeRates(ExchangeRate rate) {
 		GetAllResponseDto responseDto = new GetAllResponseDto();
 		responseDto.setDate(rate.getDate());
 		responseDto.setSource(rate.getSource());
@@ -27,5 +26,17 @@ public class ResponseMapper {
 		rates.add(czkrate);
 		responseDto.setRates(rates);
 		return responseDto;
+	}
+
+	public GetTargetResponseDto mapGBPExchangeRate(List<ExchangeRate> rateList) {
+		GetTargetResponseDto responseDto = new GetTargetResponseDto();
+		responseDto.setSource(rateList.get(0).getSource());
+		for (ExchangeRate rate : rateList) {
+			DateObjectDto dateDto = new DateObjectDto("GBP", rate.getGBP());
+			TargetRatesDto ratesDto = new TargetRatesDto(dateDto);
+			responseDto.setRates(ratesDto);
+		}
+		return responseDto;
+
 	}
 }
